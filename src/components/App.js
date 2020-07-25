@@ -6,6 +6,7 @@ import {fetchPosts} from '../actions/posts';
 import Navbar from './Navbar';
 import Home from './Home';
 import Page404 from './Page404';
+import Login from './Login';
 
 
 function Signup(){
@@ -13,11 +14,7 @@ function Signup(){
     <div>Signup</div>
   )
 }
-function Login(){
-  return(
-    <div>Login</div>
-  )
-}
+
 class App extends React.Component {
 
   componentDidMount() {
