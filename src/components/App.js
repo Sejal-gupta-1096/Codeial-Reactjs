@@ -7,13 +7,7 @@ import Navbar from './Navbar';
 import Home from './Home';
 import Page404 from './Page404';
 import Login from './Login';
-
-
-function Signup(){
-  return(
-    <div>Signup</div>
-  )
-}
+import Signup from './Signup'
 
 class App extends React.Component {
 

@@ -46,7 +46,7 @@ class Login extends Component {
           <input onChange={this.handlePassword} value={this.state.password} type="password" placeholder="Password" required />
         </div>
         <div className="field">
-          <button disabled={this.props.auth.inProgress} onClick={this.handleFormSubmit}>Log In</button>
+          {this.props.auth.inProgress ? <button disabled={this.props.auth.inProgress} onClick={this.handleFormSubmit}>Loging In..</button>:<button disabled={this.props.auth.inProgress} onClick={this.handleFormSubmit}>Log In</button>}
         </div>
       </form>
     );
