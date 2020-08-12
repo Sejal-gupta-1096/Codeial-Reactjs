@@ -48,28 +48,39 @@ class Navbar extends React.Component {
             </div>
           </div>
           <div className="right-nav">
-            <div className="user">
-              <img
-                src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
-                alt="user-dp"
-                id="user-dp"
-              />
-              <span>John Doe</span>
-            </div>
+            {
+              this.props.auth.isLoggedIn && <div className="user">
+                <img
+                  src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
+                  alt="user-dp"
+                  id="user-dp"
+                />
+                <span>{this.props.auth.user.name}</span>
+              </div>
+            }
             <div className="nav-links">
             <ul>
               <li>
                   <Link to='/'>Home</Link>
               </li>
-              <li>
+              {
+                !this.props.auth.isLoggedIn && 
+                <li>
                   <Link to='/signup'>Signup</Link>
-              </li>
-              <li>
-                  <Link to='/login'>Login</Link>
-              </li>
-              <li onClick={this.logout}>
-                  <Link to='/login'>Logout</Link>
-              </li>
+                </li>
+              }
+              {
+                !this.props.auth.isLoggedIn && 
+                <li>
+                    <Link to='/login'>Login</Link>
+                </li>
+              }
+              {
+                this.props.auth.isLoggedIn && 
+                <li onClick={this.logout}>
+                    <Link to='/login'>Logout</Link>
+                </li>
+              }
         </ul>
             </div>
           </div>
