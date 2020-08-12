@@ -5,6 +5,7 @@ import {
   SIGNUP_START,
   SIGNUP_SUCCESS,
   SIGNUP_FAILED,
+  AUTHETICATE_USER,
 } from './action_types';
 import { APIUrls } from '../helpers/urls';
 import { getFormBody } from '../helpers/utils';
@@ -104,4 +105,12 @@ export function signup(email, password, confirmPassword, name) {
         }
       });
   };
+}
+
+
+export function authenticateUser(user){
+  return{
+    type : AUTHETICATE_USER,
+    user : user
+  }
 }

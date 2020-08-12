@@ -9,6 +9,7 @@ import Home from './Home';
 import Page404 from './Page404';
 import Login from './Login';
 import Signup from './Signup'
+import {authenticateUser} from '../actions/auth';
 
 class App extends React.Component {
 
@@ -17,6 +18,7 @@ class App extends React.Component {
     let user;
     if(token){
       user = jwtDecode(token);
+      this.props.dispatch(authenticateUser({name : user.name , email : user.email , _id : user._id}));
     }
     console.log(user);
     
