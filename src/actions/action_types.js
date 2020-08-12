@@ -9,3 +9,5 @@ export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAILED = 'SIGNUP_FAILED';
 
 export const AUTHETICATE_USER = 'AUTHENTICATE_USER';
+
+export const LOG_OUT = 'LOG_OUT';

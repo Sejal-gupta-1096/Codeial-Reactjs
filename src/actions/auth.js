@@ -6,6 +6,7 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAILED,
   AUTHETICATE_USER,
+  LOG_OUT,
 } from './action_types';
 import { APIUrls } from '../helpers/urls';
 import { getFormBody } from '../helpers/utils';
@@ -112,5 +113,11 @@ export function authenticateUser(user){
   return{
     type : AUTHETICATE_USER,
     user : user
+  }
+}
+
+export function logout(){
+  return{
+    type : LOG_OUT,
   }
 }
