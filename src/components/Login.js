@@ -31,7 +31,7 @@ class Login extends Component {
     let {email , password} = this.state;
 
     if(email && password){
-      this.props.dispatch(login({email,password}));
+      this.props.dispatch(login(email,password));
     }
   }
   render() {

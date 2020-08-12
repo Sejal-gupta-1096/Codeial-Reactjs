@@ -1,4 +1,11 @@
-import { LOGIN_START, LOGIN_SUCCESS, LOGIN_FAILED , SIGNUP_START,SIGNUP_SUCCESS,SIGNUP_FAILED } from './action_types';
+import {
+  LOGIN_START,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+  SIGNUP_START,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAILED,
+} from './action_types';
 import { APIUrls } from '../helpers/urls';
 import { getFormBody } from '../helpers/utils';
 
@@ -11,14 +18,14 @@ export function startLogin() {
 export function loginSuccess(user) {
   return {
     type: LOGIN_SUCCESS,
-    user : user
+    user: user,
   };
 }
 
 export function loginFailed(errorMessage) {
   return {
     type: LOGIN_FAILED,
-    error : errorMessage
+    error: errorMessage,
   };
 }
 
@@ -38,9 +45,10 @@ export function login(email, password) {
       })
       .then((data) => {
         console.log('data', data);
-        if(data.success){
-          dispatch(loginSuccess(data.user));
-        }else{
+        if (data.success) {
+          localStorage.setItem('token', data.data.token);
+          dispatch(loginSuccess(data.data.user));
+        } else {
           dispatch(loginFailed(data.message));
         }
       });
@@ -56,36 +64,42 @@ export function startSignup() {
 export function signupSuccess(user) {
   return {
     type: SIGNUP_SUCCESS,
-    user : user
+    user: user,
   };
 }
 
 export function signupFailed(errorMessage) {
   return {
     type: SIGNUP_FAILED,
-    error : errorMessage
+    error: errorMessage,
   };
 }
 
-export function signup(email, password , confirmPassword , name) {
+export function signup(email, password, confirmPassword, name) {
   return (dispatch) => {
     dispatch(startSignup());
     let url = APIUrls.signUp();
+    console.log('checking ', confirmPassword, password); 
     fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: getFormBody({ email, password , confirmPassword , name}),
+      body: getFormBody({
+        email,
+        name,
+        password,
+        confirm_password: confirmPassword,
+      }),
+    }) 
+    .then((response) => {
+      return response.json();
     })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
+    .then((data) => {
         console.log('data', data);
-        if(data.success){
-          dispatch(signupSuccess(data.user));
-        }else{
+        if (data.success) {
+          dispatch(signupSuccess(data.data.user));
+        } else {
           dispatch(signupFailed(data.message));
         }
       });
