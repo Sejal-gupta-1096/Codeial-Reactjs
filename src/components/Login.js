@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {clearAuthState} from '../actions/auth';
 import {login} from '../actions/auth';
 import {connect} from 'react-redux';
 
@@ -33,6 +34,10 @@ class Login extends Component {
     if(email && password){
       this.props.dispatch(login(email,password));
     }
+  }
+
+  componentWillUnmount(){
+    this.props.dispatch(clearAuthState());
   }
   render() {
     return (

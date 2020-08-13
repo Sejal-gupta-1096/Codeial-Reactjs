@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { signup } from '../actions/auth';
+import {clearAuthState} from '../actions/auth';
+
 import { connect } from 'react-redux';
 
 class Signup extends Component {
@@ -43,12 +45,16 @@ class Signup extends Component {
     console.log('state', this.state);
 
     let { email, password, confirmPassword, name } = this.state;
-    console.log('checking in signup ', password, confirmPassword);
 
-    if (email && password && password === confirmPassword) {
+    if (email && password) {
       this.props.dispatch(signup(email, password, confirmPassword, name));
     }
-  };
+  }
+
+  componentWillUnmount(){
+    this.props.dispatch(clearAuthState());
+  }
+
   render() {
     return (
       <form className="login-form">
