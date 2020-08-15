@@ -13,22 +13,18 @@ import Signup from './Signup'
 import {authenticateUser} from '../actions/auth';
 import Settings from './Settings';
 
-// const Settings = () =>{
-//   return (<div>Settings</div>);
-// }
-
-// const PrivateRoute = (privateRouteProps) =>{
-//   const {isLoggedIn , path , component : Component} = privateRouteProps
-//   return(
-//     <Route 
-//       path={path}
-//       render={(props) => {
-//         console.log(isLoggedIn)
-//         return  isLoggedIn ? <Component {...props} /> : <Redirect to='/login' />
-//       }}
-//       />
-//   )
-// }
+const PrivateRoute = (privateRouteProps) =>{
+  const {isLoggedIn , path , component : Component} = privateRouteProps
+  return(
+    <Route 
+      path={path}
+      render={(props) => {
+        console.log(isLoggedIn)
+        return  isLoggedIn ? <Component {...props} /> : <Redirect to={{pathname : '/login' , state : {from : props.location}}} />
+      }}
+      />
+  )
+}
 
 class App extends React.Component {
 
@@ -56,8 +52,7 @@ class App extends React.Component {
             }} />
             <Route path='/signup' component={Signup} />
             <Route path='/login' component={Login} />
-            <Route path='/settings' component={Settings} />
-            {/* <PrivateRoute path='/settings' component={Settings} isLoggedIn={this.props.auth.isLoggedIn} /> */}
+            <PrivateRoute path='/settings' component={Settings} isLoggedIn={this.props.auth.isLoggedIn} />
             <Route component={Page404} />
           </Switch>
         </div>
