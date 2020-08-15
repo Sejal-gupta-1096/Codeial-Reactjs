@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {editUser, clearAuthState} from '../actions/auth';
 
 class Settings extends Component {
   constructor(props) {
@@ -42,6 +43,14 @@ class Settings extends Component {
     });
   }
 
+  handleSaveProfile = () =>{
+    this.props.dispatch(editUser(this.state.name , this.state.password , this.state.confirmPassword , this.props.auth.user._id))
+  }
+
+  componentWillUnmount = () =>{
+    this.props.dispatch(clearAuthState());
+  }
+
   render() {
     const { user } = this.props.auth;
     const { editMode } = this.state;
@@ -54,6 +63,8 @@ class Settings extends Component {
           />
         </div>
 
+        {this.props.auth.error === false && <div className='alert success-dailog'>User Updated Successfully!</div>}
+        {this.props.auth.error && <div className='alert error-dailog'>{this.props.auth.error}</div>}
         <div className="field">
           <div classname="field-label">Email</div>
           <div classname="field-value">{user.email}</div>
@@ -98,7 +109,7 @@ class Settings extends Component {
 
         <div className="btn-grp">
           {editMode ? (
-            <button className="button save-btn">Save</button>
+            <button className="button save-btn" onClick={this.handleSaveProfile}>Save</button>
           ) : (
             <button onClick={this.onEditMode} className="button edit-btn">Edit profile</button>
           )}
