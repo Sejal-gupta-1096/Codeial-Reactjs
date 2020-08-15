@@ -13,3 +13,7 @@ export const AUTHETICATE_USER = 'AUTHENTICATE_USER';
 export const LOG_OUT = 'LOG_OUT';
 
 export const CLEAR_AUTH_STATE = 'CLEAR_AUTH_STATE';
+
+export const EDIT_USER_START = 'EDIT_USER_START';
+export const EDIT_USER_SUCCESS = 'EDIT_USER_SUCCESS';
+export const EDIT_USER_FAILED = 'EDIT_USER_FAILED';

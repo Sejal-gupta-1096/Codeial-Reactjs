@@ -8,6 +8,8 @@ import {
   AUTHETICATE_USER,
   LOG_OUT,
   CLEAR_AUTH_STATE,
+  EDIT_USER_SUCCESS,
+  EDIT_USER_FAILED,
 } from './action_types';
 import { APIUrls } from '../helpers/urls';
 import { getFormBody } from '../helpers/utils';
@@ -127,4 +129,44 @@ export function clearAuthState(){
   return{
     type : CLEAR_AUTH_STATE,
   }
+}
+
+export function editUserSuccess(user) {
+  return {
+    type: EDIT_USER_SUCCESS,
+    user: user,
+  };
+}
+
+export function editUserFailed(errorMessage) {
+  return {
+    type: EDIT_USER_FAILED,
+    error: errorMessage,
+  };
+}
+
+export function editUser(name, password , confirmPassword , userId) {
+  return (dispatch) => {
+    let url = APIUrls.edit();
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization : `Bearer ${localStorage.getItem('token')}`
+      },
+      body: getFormBody({ name, password , confirm_password : confirmPassword , id : userId }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log('data', data);
+        if (data.success) {
+          localStorage.setItem('token', data.data.token);
+          dispatch(editUserSuccess(data.data.user));
+        } else {
+          dispatch(editUserFailed(data.message));
+        }
+      });
+  };
 }
