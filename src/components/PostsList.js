@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
 class PostsList extends Component {
+  
   render() {
     const { posts } = this.props;
     return (

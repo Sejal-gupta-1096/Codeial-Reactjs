@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {fetchUserProfile} from '../actions/user_profile'
 
 class User extends Component {
 
     componentDidMount = () => {
         console.log(this.props.match.params);
+        this.props.dispatch(fetchUserProfile(this.props.match.params.userId))
     }
   render() {
     return (
@@ -17,12 +20,12 @@ class User extends Component {
 
         <div className="field">
           <div classname="field-label">Email</div>
-          <div classname="field-value">{}</div>
+          <div classname="field-value">{this.props.userProfile.user.email}</div>
         </div>
 
         <div className="field">
           <div classname="field-label">Name</div>
-          <div classname="field-value">{}</div>
+          <div classname="field-value">{this.props.userProfile.user.name}</div>
         </div>
 
         <div className="btn-grp">
@@ -34,5 +37,9 @@ class User extends Component {
   }
 }
 
-
-export default User;
+function mapStateToProps(state){
+    return{
+        userProfile : state.userProfile
+    }
+}
+export default connect(mapStateToProps)(User);
