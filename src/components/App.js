@@ -12,6 +12,7 @@ import Login from './Login';
 import Signup from './Signup'
 import {authenticateUser} from '../actions/auth';
 import Settings from './Settings';
+import User from './User';
 
 const PrivateRoute = (privateRouteProps) =>{
   const {isLoggedIn , path , component : Component} = privateRouteProps
@@ -53,6 +54,7 @@ class App extends React.Component {
             <Route path='/signup' component={Signup} />
             <Route path='/login' component={Login} />
             <PrivateRoute path='/settings' component={Settings} isLoggedIn={this.props.auth.isLoggedIn} />
+            <PrivateRoute path='/user/:userId' component={User} isLoggedIn={this.props.auth.isLoggedIn} />
             <Route component={Page404} />
           </Switch>
         </div>
