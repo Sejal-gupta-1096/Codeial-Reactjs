@@ -4,5 +4,6 @@ export const APIUrls = {
     logIn : () => `http://codeial.com:8000/api/v2/users/login`,
     edit : () => `http://codeial.com:8000/api/v2/users/edit`,
     fetchUser : (userId) => `http://codeial.com:8000/api/v2/users/${userId}`,
-    fetchUserFriends : () => `http://codeial.com:8000/api/v2/friendship/fetch_user_friends`
+    fetchUserFriends : () => `http://codeial.com:8000/api/v2/friendship/fetch_user_friends`,
+    addFreind : (userId) => `http://codeial.com:8000/api/v2/friendship/create_friendship?user_id=${userId}`
 }

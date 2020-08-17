@@ -1,6 +1,6 @@
 
 import {APIUrls} from '../helpers/urls';
-import { FETCH_FRIENDS_SUCCESS, FETCH_FRIENDS_FAILED } from './action_types';
+import { FETCH_FRIENDS_SUCCESS, FETCH_FRIENDS_FAILED, ADD_FRIEND_SUCCESS, ADD_FRIEND_FAILED } from './action_types';
 
 
 export function fetchFriendsSucess(friends) {
@@ -40,3 +40,12 @@ export function fetchFriendsSucess(friends) {
         });
     };
   }
+
+  export function addFriendSuccess(friend) {
+    return {
+      type: ADD_FRIEND_SUCCESS,
+      friend : friend
+    };
+  }
+
+  
