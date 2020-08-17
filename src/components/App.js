@@ -13,6 +13,7 @@ import Signup from './Signup'
 import {authenticateUser} from '../actions/auth';
 import Settings from './Settings';
 import User from './User';
+import {fetchFriends} from '../actions/friends';
 
 const PrivateRoute = (privateRouteProps) =>{
   const {isLoggedIn , path , component : Component} = privateRouteProps
@@ -35,6 +36,7 @@ class App extends React.Component {
     if(token){
       user = jwtDecode(token);
       this.props.dispatch(authenticateUser({name : user.name , email : user.email , _id : user._id}));
+      this.props.dispatch(fetchFriends(this.props.auth.user._id));
     }
     console.log(user);
     
@@ -49,7 +51,7 @@ class App extends React.Component {
           <Navbar />
           <Switch>
             <Route exact path='/' render={ (props) => {
-              return <Home {...props} posts={this.props.posts} />
+              return <Home {...props} isLoggedIn={this.props.auth.isLoggedIn} friends={this.props.friends} posts={this.props.posts} />
             }} />
             <Route path='/signup' component={Signup} />
             <Route path='/login' component={Login} />
@@ -71,7 +73,8 @@ App.propTypes = {
 function mapStateToProps(state){
   return{
     posts : state.posts,
-    auth : state.auth
+    auth : state.auth,
+    friends : state.friends
   }
 }
 export default connect(mapStateToProps)(App);

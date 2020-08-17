@@ -9,6 +9,9 @@ class User extends Component {
         this.props.dispatch(fetchUserProfile(this.props.match.params.userId))
     }
   render() {
+      if(this.props.userProfile.inProgress){
+          return <h1>Loading...</h1>
+      }
     return (
       <div className="settings">
         <div className="img-container">

@@ -24,7 +24,7 @@ export function fetchUserProfileSuccess(user) {
   
   export function fetchUserProfile(userId) {
     return (dispatch) => {
-      dispatch(fetchUserProfileStart);
+      dispatch(fetchUserProfileStart());
       let url = APIUrls.fetchUser(userId);
       fetch(url, {
         method: 'GET',
