@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {fetchUserProfile} from '../actions/user_profile';
 import {APIUrls} from '../helpers/urls';
-import { addFriendSuccess } from '../actions/friends';
+import { addFriendSuccess, removeFreindSuccess } from '../actions/friends';
 
 class User extends Component {
 
   constructor(props){
     super(props);
     this.state = {
-      success : null,
-      error : null
+      removeSuccess : null,
+      removeError : null,
+      addSuccess : null,
+      addError : null
     }
   }
     componentDidMount = () => {
@@ -34,19 +36,38 @@ class User extends Component {
       if(data.success){
         this.props.dispatch(addFriendSuccess(data.data.friendship));
         this.setState({
-          success : data.message
+          addSuccess : data.message
         })
       }else{
         this.setState({
-          success : null,
-          error : data.message
+          addError : data.message
         })
       }
       
     }
 
-    handleRemoveFriend = () => {
+    handleRemoveFriend = async () => {
+      let url = APIUrls.removeFriend(this.props.match.params.userId);
+      const response = await fetch(url ,{ 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization : `Bearer ${localStorage.getItem('token')}`
+        },
+      });
 
+      const data = await response.json();
+      console.log(data);
+      if(data.success){
+        this.props.dispatch(removeFreindSuccess(this.props.match.params.userId));
+        this.setState({
+          removeSuccess : data.message
+        })
+      }else{
+        this.setState({
+          removeError : data.message
+        })
+      }
     }
 
     checkUserAFriend = () =>{
@@ -92,8 +113,10 @@ class User extends Component {
             }
         </div>
 
-        {this.state.success && <div className='alert success-dailog'>{this.state.success}</div>}
-        {this.state.error && <div className='alert error-dailog'>{this.state.error}</div>}
+        {this.state.addSuccess && <div className='alert success-dailog'>{this.state.addSuccess}</div>}
+        {this.state.addError && <div className='alert error-dailog'>{this.state.addError}</div>}
+        {this.state.removeSuccess && <div className='alert success-dailog'>{this.state.removeSuccess}</div>}
+        {this.state.removeError && <div className='alert error-dailog'>{this.state.removeError}</div>}
         
       </div>
     );

@@ -1,4 +1,4 @@
-import { FETCH_FRIENDS_SUCCESS, ADD_FRIEND_SUCCESS, ADD_FRIEND_FAILED } from "../actions/action_types";
+import { FETCH_FRIENDS_SUCCESS, ADD_FRIEND_SUCCESS, REMOVE_FRIEND_SUCCESS } from "../actions/action_types";
 
 export default function friends(state=[] , action){
 
@@ -7,6 +7,9 @@ export default function friends(state=[] , action){
             return action.friends;
         case ADD_FRIEND_SUCCESS :
             return state.concat(action.friend);
+        case REMOVE_FRIEND_SUCCESS :
+            let newArr = state.filter( (friend) => friend.to_user._id !== action.friend)
+            return newArr;
             
         default :
         return state;
