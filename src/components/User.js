@@ -44,10 +44,27 @@ class User extends Component {
       }
       
     }
+
+    handleRemoveFriend = () => {
+
+    }
+
+    checkUserAFriend = () =>{
+      let friendId = this.props.match.params.userId;
+      let flag = false;
+      this.props.friends.map( (friend) =>{
+        if(friendId === friend.to_user._id){
+          flag = true
+        }
+      })
+
+      return flag;
+    }
   render() {
       if(this.props.userProfile.inProgress){
           return <h1>Loading...</h1>
       }
+      let isUserAFriend = this.checkUserAFriend();
     return (
       <div className="settings">
         <div className="img-container">
@@ -68,7 +85,11 @@ class User extends Component {
         </div>
 
         <div className="btn-grp">
+            {
+            isUserAFriend ? 
+            <button onClick={this.handleRemoveFriend} className="button save-btn">Remove Friend</button>:
             <button onClick={this.handleAddFriend} className="button save-btn">Add Friend</button>
+            }
         </div>
 
         {this.state.success && <div className='alert success-dailog'>{this.state.success}</div>}
@@ -81,7 +102,8 @@ class User extends Component {
 
 function mapStateToProps(state){
     return{
-        userProfile : state.userProfile
+        userProfile : state.userProfile,
+        friends : state.friends
     }
 }
 export default connect(mapStateToProps)(User);
