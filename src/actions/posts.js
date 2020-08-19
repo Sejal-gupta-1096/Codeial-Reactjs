@@ -1,4 +1,4 @@
-import { UPDATE_POSTS } from './action_types';
+import { UPDATE_POSTS, ADD_POST } from './action_types';
 import { APIUrls } from '../helpers/urls';
 
 export function fetchPosts() {
@@ -19,4 +19,11 @@ export function updatePosts(posts) {
     type: UPDATE_POSTS,
     posts: posts,
   };
+}
+
+export function addPost(post){
+  return {
+    type : ADD_POST,
+    post : post
+  }
 }
