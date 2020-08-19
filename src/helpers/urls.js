@@ -7,5 +7,6 @@ export const APIUrls = {
     fetchUserFriends : () => `http://codeial.com:8000/api/v2/friendship/fetch_user_friends`,
     addFreind : (userId) => `http://codeial.com:8000/api/v2/friendship/create_friendship?user_id=${userId}`,
     removeFriend : (userId) => `http://codeial.com:8000/api/v2/friendship/remove_friendship?user_id=${userId}`,
-    createNewPost : () => `http://codeial.com:8000/api/v2/posts/create`
+    createNewPost : () => `http://codeial.com:8000/api/v2/posts/create`,
+    createNewComment : () => `http://codeial.com:8000/api/v2/comments/`
 }
