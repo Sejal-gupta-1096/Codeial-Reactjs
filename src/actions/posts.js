@@ -1,4 +1,4 @@
-import { UPDATE_POSTS, ADD_POST, ADD_COMMENT } from './action_types';
+import { UPDATE_POSTS, ADD_POST, ADD_COMMENT, ADD_POST_LIKE } from './action_types';
 import { APIUrls } from '../helpers/urls';
 
 export function fetchPosts() {
@@ -29,9 +29,19 @@ export function addPost(post){
 }
 
 export function addComment(comment , postId){
+  console.log('Adding Comment' , comment)
   return {
     type : ADD_COMMENT,
     comment : comment,
     postId : postId
+  }
+}
+
+export function addPostLikesToStore(postId , userId , deleted){
+  return{
+    type : ADD_POST_LIKE,
+    postId,
+    userId,
+    deleted
   }
 }

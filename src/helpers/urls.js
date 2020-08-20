@@ -8,5 +8,6 @@ export const APIUrls = {
     addFreind : (userId) => `http://codeial.com:8000/api/v2/friendship/create_friendship?user_id=${userId}`,
     removeFriend : (userId) => `http://codeial.com:8000/api/v2/friendship/remove_friendship?user_id=${userId}`,
     createNewPost : () => `http://codeial.com:8000/api/v2/posts/create`,
-    createNewComment : () => `http://codeial.com:8000/api/v2/comments/`
+    createNewComment : () => `http://codeial.com:8000/api/v2/comments/`,
+    toggleLike : (likeId , likeType) => `http://codeial.com:8000/api/v2/likes/toggle?likeable_id=${likeId}&likeable_type=${likeType}`,
 }

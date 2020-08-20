@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import PropTypes, { func } from 'prop-types';
 import { connect } from 'react-redux';
 import Comment from './Comment';
 import {APIUrls} from '../helpers/urls';
 import {getFormBody} from '../helpers/utils';
-import { addComment } from '../actions/posts';
+import { addComment, addPostLikesToStore } from '../actions/posts';
 
 class Post extends Component {
   constructor(props) {
@@ -13,6 +13,7 @@ class Post extends Component {
 
     this.state = {
       comment: '',
+      isPostLiked : false
     };
   }
   handleAddComment = async (e) => {
@@ -28,7 +29,7 @@ class Post extends Component {
             'Content-Type': 'application/x-www-form-urlencoded',
             Authorization : `Bearer ${localStorage.getItem('token')}`
             },
-            body: getFormBody({comment , post_id: postId})
+            body: getFormBody({content:comment , post_id: postId})
         })
         const data = await response.json();
         console.log('data', data);
@@ -49,10 +50,31 @@ class Post extends Component {
     });
   };
 
+  handleToggleLike = async () =>{
+
+    let postId = this.props.post._id;
+    let likeType = 'Post';
+    let userId = this.props.auth.user._id;
+    let url = await APIUrls.toggleLike(postId , likeType);
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization : `Bearer ${localStorage.getItem('token')}`
+        },
+    })
+    const data = await response.json();
+    console.log('data', data);
+    if (data.success) {
+        this.props.dispatch(addPostLikesToStore(postId , userId , data.data.deleted));
+    }
+  }
+
   render() {
     const { post } = this.props;
     const { comment } = this.state;
-
+    const isPostLiked = this.props.post.likes.includes(this.props.auth.user._id);
+    console.log('Checking toggleLike' , this.props.post.likes , isPostLiked);
     return (
       <div className="post-wrapper" key={post._id}>
         <div className="post-header">
@@ -71,13 +93,21 @@ class Post extends Component {
           <div className="post-content">{post.content}</div>
 
           <div className="post-actions">
-            <div className="post-like">
-              <img
+            <button className="post-like no-btn" onClick = {this.handleToggleLike}>
+              {
+                isPostLiked ? 
+                <img
+                src="https://image.flaticon.com/icons/svg/1076/1076984.svg"
+                alt="likes-icon"
+                /> : 
+                <img
                 src="https://image.flaticon.com/icons/svg/1077/1077035.svg"
                 alt="likes-icon"
-              />
+                />
+            }
+              
               <span>{post.likes.length}</span>
-            </div>
+            </button>
 
             <div className="post-comments-icon">
               <img
@@ -111,4 +141,9 @@ Post.propTypes = {
   post: PropTypes.object.isRequired,
 };
 
-export default connect()(Post);
+function mapStateToProps(state){
+  return {
+    auth : state.auth
+  }
+}
+export default connect(mapStateToProps)(Post);

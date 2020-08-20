@@ -29,3 +29,4 @@ export const REMOVE_FRIEND_SUCCESS = 'REMOVE_FRIEND_SUCCESS';
 
 export const ADD_POST = 'ADD_POST';
 export const ADD_COMMENT = 'ADD_COMMENT';
+export const ADD_POST_LIKE = 'ADD_POST_LIKE';
