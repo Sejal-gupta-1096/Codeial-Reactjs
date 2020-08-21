@@ -10,4 +10,5 @@ export const APIUrls = {
     createNewPost : () => `http://codeial.com:8000/api/v2/posts/create`,
     createNewComment : () => `http://codeial.com:8000/api/v2/comments/`,
     toggleLike : (likeId , likeType) => `http://codeial.com:8000/api/v2/likes/toggle?likeable_id=${likeId}&likeable_type=${likeType}`,
+    search : (searchText) => `http://codeial.com:8000/api/v2/users/search?text=${searchText}`
 }
