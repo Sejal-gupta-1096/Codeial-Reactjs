@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {logout} from '../actions/auth'
 import { searchUsers } from '../actions/search';
+import { fetchUserProfile } from '../actions/user_profile';
 
 class Navbar extends React.Component {
   logout = () =>{
@@ -13,6 +14,8 @@ class Navbar extends React.Component {
   handleSearch = (event) =>{
     this.props.dispatch(searchUsers(event.target.value))
   }
+
+  
   render() {
     return (
       <nav className="nav">
@@ -40,7 +43,7 @@ class Navbar extends React.Component {
                       {
                         this.props.search.result.map( (user)=>{
                           return (<li className='search-results-row' key={user._id}>
-                                  <Link to={`user/${user._id}`}>
+                                  <Link to={`/user/${user._id}`}>
                                     <img src="https://image.flaticon.com/icons/svg/2154/2154651.svg"/>
                                     <span>{user.name}</span>
                                   </Link>

@@ -20,6 +20,13 @@ class User extends Component {
         this.props.dispatch(fetchUserProfile(this.props.match.params.userId))
     }
 
+    componentDidUpdate(prevProps){
+      console.log(prevProps)
+      if(prevProps.match.params.userId !== this.props.match.params.userId){
+        this.props.dispatch(fetchUserProfile(this.props.match.params.userId));
+      }
+    }
+
     handleAddFriend = async () =>{
 
       let url = APIUrls.addFreind(this.props.match.params.userId);
